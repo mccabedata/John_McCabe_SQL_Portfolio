@@ -34,4 +34,4 @@ SELECT customers.name, customers.email, SUM(orders.price) AS 'total'
     LEFT OUTER JOIN orders
     ON customers.id = orders.customer_id
     GROUP BY name
-    ORDER BY SUM(orders.price) DESC;
+    ORDER BY orders.price DESC;
