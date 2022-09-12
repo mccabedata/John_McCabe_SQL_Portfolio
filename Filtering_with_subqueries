@@ -1,0 +1,19 @@
+/* Which US counties are at or above the 90th percentile, or top 10 percent for population */
+
+SELECT county_name,
+	state_name,
+pop_est_2019,
+FROM us_counties_pop_est_2019
+WHERE pop_est_2019 >= (
+	SELECT percentile_cont(.9) WITHIN GROUP (ORDER By pop_est_2019)
+	FROM us_counties_pop_est_2019)
+ORDER BY pop_est_2019 DESC;
+
+/* Generating columns with subqueries */
+
+SELECT county_name,
+	State_name AS st,
+Pop_est_2019,
+  (SELECT percentile_cont(.5) WITHIN GROUP (ORDER BY pop_est_2019) 
+  FROM us_counties_pop_est_2019) AS us_median
+FROM us_counties_pop_est_2019;
